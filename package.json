@@ -1,0 +1,32 @@
+{
+  "name": "metaverse-vm-graphql-server",
+  "version": "0.0.1",
+  "description": "Metavese Blockchain GraphQL Endpoint",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "tsc",
+    "serve": "nodemon -e ts -w ./src -x npm run serve:start",
+    "serve:start": "ts-node src/index.ts",
+    "start": "node lib/index",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Metaverse",
+    "Blockchain",
+    "GraphQL"
+  ],
+  "author": "Metaverse Foundation",
+  "license": "ISC",
+  "dependencies": {
+    "apollo-server": "^2.24.1",
+    "dotenv": "^10.0.0",
+    "graphql": "^15.5.0",
+    "mongoose": "^5.12.11"
+  },
+  "devDependencies": {
+    "@types/node": "^15.6.1",
+    "nodemon": "^2.0.7",
+    "ts-node": "^10.0.0",
+    "typescript": "^4.3.2"
+  }
+}
