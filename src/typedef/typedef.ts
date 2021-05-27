@@ -75,6 +75,7 @@ export const typeDefs = gql`
 
   type Query {
     block(id: ID!): Block
+    blockByNumber(number: Int!): Block
     blocks(query: BlockQuery, limit: Int, offset: Int): [Block]
     tx(id: ID!): Tx
     txs(query: TxQuery, limit: Int, offset: Int): [Tx]

@@ -2,7 +2,7 @@ import { ApolloServer, } from 'apollo-server'
 import { connect } from 'mongoose'
 import { config } from 'dotenv'
 import { BlocksResolver } from './resolvers/blocks.resolver'
-import { BlockResolver } from './resolvers/block.resolver'
+import { BlockByNumberResolver, BlockResolver } from './resolvers/block.resolver'
 import { TxResolver } from './resolvers/tx.resolver'
 import { TxsResolver } from './resolvers/txs.resolver'
 import { typeDefs } from './typedef/typedef'
@@ -18,6 +18,7 @@ const BIND_ADDRESS = process.env.BIND_ADDRESS || '127.0.0.1'
 const resolvers = {
   Query: {
     block: BlockResolver,
+    blockByNumber: BlockByNumberResolver,
     blocks: BlocksResolver,
     tx: TxResolver,
     txs: TxsResolver,
