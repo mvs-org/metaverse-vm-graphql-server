@@ -43,7 +43,7 @@ export const typeDefs = gql`
     transactionIndex: Int
   }
 
-    type TxReceipt {
+  type TxReceipt {
     blockHash: String
     blockNumber: Int
     contractAddress: String
@@ -89,8 +89,9 @@ export const typeDefs = gql`
   type Query {
     block(id: ID!): Block
     blockByNumber(number: Int!): Block
-    blocks(query: BlockQuery, limit: Int, offset: Int): [Block]
+    blocks(query: BlockQuery, limit: Int, offset: Int, sort: String): [Block]
     tx(id: ID!): Tx
-    txs(query: TxQuery, limit: Int, offset: Int): [Tx]
+    txs(query: TxQuery, limit: Int, offset: Int, sort: String): [Tx]
+    price: Price
   }
 `
