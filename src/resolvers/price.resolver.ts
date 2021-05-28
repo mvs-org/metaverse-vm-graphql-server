@@ -1,8 +1,16 @@
 import { get } from 'superagent'
+import Cache from 'node-cache'
+
+const priceCache = new Cache( { stdTTL: 600, checkperiod: 60 } );
 
 export const PriceResolver = async (_parent: any, { base }: { base: string }) => {
-  const prices = await get('https://api.coingecko.com/api/v3/coins/metaverse-etp?localization=false&tickers=false&market_data=true&community_data=false&developer_data=false&sparkline=false')
-    .then(response => response.body.market_data)
+
+  let prices: any = priceCache.get('prices')
+  if( prices === undefined ){
+    prices = await get('https://api.coingecko.com/api/v3/coins/metaverse-etp?localization=false&tickers=false&market_data=true&community_data=false&developer_data=false&sparkline=false')
+      .then(response => response.body.market_data)
+    priceCache.set('prices', prices)
+  }
   return {
     current_USD: prices.current_price.usd,
     current_SATS: prices.current_price.sats,
