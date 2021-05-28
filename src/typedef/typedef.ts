@@ -58,6 +58,19 @@ export const typeDefs = gql`
     transactionIndex: Int
  }
 
+ type Price {
+    current_USD: Float
+    current_SATS: Float
+    change1h_USD: Float
+    change1h_SATS: Float
+    change24h_USD: Float
+    change24h_SATS: Float
+    low24h_USD: Float
+    low24h_SATS: Float
+    high_USD: Float
+    high_SATS: Float
+ }
+
   input BlockQuery {
     hash: String
     number_gte: Int

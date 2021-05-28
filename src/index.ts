@@ -6,6 +6,7 @@ import { BlockByNumberResolver, BlockResolver } from './resolvers/block.resolver
 import { TxResolver } from './resolvers/tx.resolver'
 import { TxsResolver } from './resolvers/txs.resolver'
 import { typeDefs } from './typedef/typedef'
+import { PriceResolver, } from './resolvers/price.resolver'
 
 // load environment
 config()
@@ -22,6 +23,7 @@ const resolvers = {
     blocks: BlocksResolver,
     tx: TxResolver,
     txs: TxsResolver,
+    price: PriceResolver,
   },
 }
 
