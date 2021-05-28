@@ -86,6 +86,8 @@ export const typeDefs = gql`
     to: String
   }
 
+  union SearchResult = Tx|Block
+
   type Query {
     block(id: ID!): Block
     blockByNumber(number: Int!): Block
@@ -93,5 +95,6 @@ export const typeDefs = gql`
     tx(id: ID!): Tx
     txs(query: TxQuery, limit: Int, offset: Int, sort: String): [Tx]
     price: Price
+    search(query: String!): [SearchResult]
   }
 `

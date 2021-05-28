@@ -7,6 +7,7 @@ import { TxResolver } from './resolvers/tx.resolver'
 import { TxsResolver } from './resolvers/txs.resolver'
 import { typeDefs } from './typedef/typedef'
 import { PriceResolver, } from './resolvers/price.resolver'
+import { SearchResolver } from './resolvers/search.resolver'
 
 // load environment
 config()
@@ -17,6 +18,15 @@ const BIND_PORT = process.env.BIND_PORT ? parseInt(process.env.BIND_PORT, 10) : 
 const BIND_ADDRESS = process.env.BIND_ADDRESS || '127.0.0.1'
 
 const resolvers = {
+  SearchResult: {
+    __resolveType(obj: any, context: any, info: any) {
+      switch (obj.type) {
+        case 'tx': return 'Tx'
+        case 'block': return 'Block'
+        default: return null
+      }
+    },
+  },
   Query: {
     block: BlockResolver,
     blockByNumber: BlockByNumberResolver,
@@ -24,10 +34,11 @@ const resolvers = {
     tx: TxResolver,
     txs: TxsResolver,
     price: PriceResolver,
+    search: SearchResolver,
   },
 }
 
-const server = new ApolloServer({ typeDefs, resolvers, playground: { tabs: [{endpoint: GQL_ENDPOINT}]} })
+const server = new ApolloServer({ typeDefs, resolvers, playground: { tabs: [{ endpoint: GQL_ENDPOINT }] } })
 
 server.listen(BIND_PORT, BIND_ADDRESS).then(async ({ url }) => {
 
