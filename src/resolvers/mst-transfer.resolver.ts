@@ -1,3 +1,4 @@
+import { fromLogTopic, toLogTopic } from '../models/address.model'
 import { LogModel } from '../models/log.model'
 import { MST_CONTRACTS, MST_CONTRACTS_MAP } from '../models/mst.model'
 
@@ -18,10 +19,10 @@ export const MSTTransfersResolver = (_parent: any, { query = {}, limit, offset, 
     ...(query.address && {
       $or: [
         {
-          "topics.1": query.address,
+          "topics.1": toLogTopic(query.address.toLowerCase()),
         },
         {
-          "topics.2": query.address,
+          "topics.2": toLogTopic(query.address.toLowerCase()),
         },
       ]
     }),
@@ -35,8 +36,8 @@ export const MSTTransfersResolver = (_parent: any, { query = {}, limit, offset, 
   return LogModel.find(q, {}, { limit: limit || 5, skip: offset || 0, sort: { blockNumber: sort == 'desc' ? -1 : 1 }, lean: 1 })
     .then((logs: any) => logs.map((log: any) => ({
       transactionHash: log.transactionHash,
-      from: log.topics[1].replace('000000000000000000000000', ''),
-      to: log.topics[2].replace('000000000000000000000000', ''),
+      from: fromLogTopic(log.topics[1]),
+      to: fromLogTopic(log.topics[2]),
       value: BigInt(log.data).toString(),
       contractId: log.address,
       blockHash: log.blockHash,
