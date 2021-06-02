@@ -36,6 +36,9 @@ const resolvers = {
     price: PriceResolver,
     search: SearchResolver,
   },
+  Block: {
+    transactions: TxsResolver
+  }
 }
 
 const server = new ApolloServer({ typeDefs, resolvers, playground: { tabs: [{ endpoint: GQL_ENDPOINT }] } })

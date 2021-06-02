@@ -10,6 +10,7 @@ export const typeDefs = gql`
     parentHash: String
     size: Int
     timestamp: Int
+    transactions: [Tx!]
   }
 
   type Tx {
