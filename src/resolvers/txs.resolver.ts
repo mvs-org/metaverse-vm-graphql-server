@@ -24,10 +24,3 @@ export const TxsResolver = (parent: any, { query, limit, offset, sort, }: { quer
   } : {}
   return TransactionModel.find(q, {}, { limit: limit || 5, skip: offset || 0, sort: { blockNumber: sort == 'desc' ? -1 : 1 } })
 }
-        ...(query.blockNumber_gte && { $gte: query.blockNumber_gte }),
-        ...(query.blockNumber_lte && { $lte: query.blockNumber_lte }),
-      }
-    }),
-  } : {}
-  return TransactionModel.find(q, {}, { limit: limit || 5, skip: offset || 0, sort: { blockNumber: sort == 'desc' ? -1 : 1 } })
-}

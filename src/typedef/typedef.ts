@@ -44,6 +44,24 @@ export const typeDefs = gql`
     transactionIndex: Int
   }
 
+  type MSTTransfer {
+    transactionHash: String
+    from: String
+    to: String
+    value: String
+    contractId: String
+    blockHash: String
+    blockNumber: Int
+    tokenInfo: MSTInfo
+  }
+
+  type MSTInfo {
+    address: ID!
+    decimals: Int
+    symbol: String
+    logoURI: String
+  }
+
   type TxReceipt {
     blockHash: String
     blockNumber: Int
@@ -87,6 +105,12 @@ export const typeDefs = gql`
     to: String
   }
 
+  input MSTQuery {
+    blockNumber_gte: Int
+    blockNumber_lte: Int
+    address: String
+  }
+
   union SearchResult = Tx|Block
 
   type Query {
@@ -95,6 +119,8 @@ export const typeDefs = gql`
     blocks(query: BlockQuery, limit: Int, offset: Int, sort: String): [Block]
     tx(id: ID!): Tx
     txs(query: TxQuery, limit: Int, offset: Int, sort: String): [Tx]
+    msts: [MSTInfo]
+    mstTransfers(query: MSTQuery, limit: Int, offset: Int, sort: String): [MSTTransfer]
     price: Price
     search(query: String!): [SearchResult]
   }

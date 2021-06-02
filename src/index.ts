@@ -8,6 +8,7 @@ import { TxsResolver } from './resolvers/txs.resolver'
 import { typeDefs } from './typedef/typedef'
 import { PriceResolver, } from './resolvers/price.resolver'
 import { SearchResolver } from './resolvers/search.resolver'
+import { MSTInfoResolver, MSTsInfoResolver, MSTTransfersResolver } from './resolvers/mst-transfer.resolver'
 
 // load environment
 config()
@@ -33,11 +34,16 @@ const resolvers = {
     blocks: BlocksResolver,
     tx: TxResolver,
     txs: TxsResolver,
+    msts: MSTsInfoResolver,
+    mstTransfers: MSTTransfersResolver,
     price: PriceResolver,
     search: SearchResolver,
   },
   Block: {
     transactions: TxsResolver
+  },
+  MSTTransfer: {
+    tokenInfo: MSTInfoResolver,
   }
 }
 
