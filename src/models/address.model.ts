@@ -1,0 +1,2 @@
+export const toLogTopic = (address: string) => address.substring(0, 2) + '000000000000000000000000' + address.substring(2)
+export const fromLogTopic = (topic: string) => topic.replace('000000000000000000000000', '')
