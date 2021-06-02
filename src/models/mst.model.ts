@@ -40,5 +40,3 @@ export const MST_CONTRACTS = [
 ]
 
 export const MST_CONTRACTS_MAP = keyBy(MST_CONTRACTS, 'address')
-
-console.log(MST_CONTRACTS_MAP)
