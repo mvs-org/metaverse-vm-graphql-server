@@ -1,4 +1,4 @@
-import {groupBy} from 'lodash'
+import { keyBy } from 'lodash'
 
 export interface MSTContractData {
     contractId: string
@@ -39,4 +39,6 @@ export const MST_CONTRACTS = [
     }
 ]
 
-export const MST_CONTRACTS_MAP = groupBy(MST_CONTRACTS, 'address')
+export const MST_CONTRACTS_MAP = keyBy(MST_CONTRACTS, 'address')
+
+console.log(MST_CONTRACTS_MAP)
