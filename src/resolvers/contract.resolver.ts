@@ -9,6 +9,7 @@ export const ContractResolver = async (parent: { address?: string } = {}, { addr
       throw Error('parent contractId or argument contractId must be provided')
     }
   }
+
   const createTx = await TransactionModel.findOne(
     { creates: address, 'receipt.status': true },
     { hash: 1 },

@@ -107,7 +107,7 @@ export const typeDefs = gql`
     abi: String
     sourceCode: String
     bytecode: String
-    name: String
+    contractName: String
     logoURI: String
   }
 
