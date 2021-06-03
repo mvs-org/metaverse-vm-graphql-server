@@ -1,7 +1,7 @@
 import { TransactionModel } from '../models/transaction.model'
 
 export const TxsResolver = (parent: { address?: string, hash?: string } = {}, { query, limit, offset, sort, }: { query: any, limit: number, offset: number, sort: 'desc' | 'asc' }) => {
-  if(query===undefined){
+  if (query === undefined) {
     query = {}
   }
   const address = parent.address || query.address
@@ -33,9 +33,12 @@ export const TxsResolver = (parent: { address?: string, hash?: string } = {}, { 
       limit: limit || 5,
       skip: offset || 0,
       sort: { blockNumber: sort == 'desc' ? -1 : 1 },
-      collation: {
-        locale: 'en',
-        strength: 2
-      }
+      ...(((parent && parent.hash) || query.from || query.to || address) && {
+        collation: {
+          locale: 'en',
+          strength: 2
+        }
+      }),
+
     })
 }
