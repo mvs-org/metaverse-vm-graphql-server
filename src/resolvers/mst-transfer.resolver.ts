@@ -12,7 +12,6 @@ export const MSTInfoResolver = (parent: any = {}) => {
 
 export const MSTTransfersResolver = (parent: {address?: string} = {}, { query = {}, limit, offset, sort, }: { query: any, limit: number, offset: number, sort: 'desc' | 'asc' }) => {
   const address = query.address || parent.address
-  console.log('address',{address})
   const q = {
     // Only known contract addresses
     "address": { $in: MST_CONTRACTS.map(contract => contract.address) },

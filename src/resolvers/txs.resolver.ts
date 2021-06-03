@@ -26,7 +26,6 @@ export const TxsResolver = (parent: { address?: string, hash?: string } = {}, { 
       }
     }),
   }
-  console.log({q})
   return TransactionModel.find(
     q,
     {},
