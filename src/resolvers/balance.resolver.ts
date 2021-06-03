@@ -7,7 +7,12 @@ const web3 = new Web3(RPC_ENDPOINT)
 export const ETPBalanceResolver = async (parent: {address?: string} = {}, { address }: { address: string }) => {
     const target = address || parent.address
     if(target !== undefined){
-        return await web3.eth.getBalance(target)
+        try{
+            return await web3.eth.getBalance(target)
+        } catch(error){
+            console.log(error.message)
+            return null
+        }
     }
     return null
 }
