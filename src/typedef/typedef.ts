@@ -105,7 +105,7 @@ export const typeDefs = gql`
     address: ID!
     creationTransaction: Tx
     abi: String
-    sourceCode: String
+    source: String
     bytecode: String
     contractName: String
     logoURI: String
