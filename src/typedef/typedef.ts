@@ -4,7 +4,7 @@ export const typeDefs = gql`
     type Block {
     id: ID
     hash: String
-    gasUsed: Int
+    gasUsed: String
     miner: String
     number: Int
     parentHash: String
@@ -20,8 +20,8 @@ export const typeDefs = gql`
     confirmedAt: Int
     creates: String
     from: String
-    gas: Int
-    gasPrice: Int
+    gas: String
+    gasPrice: String
     input: String
     nonce: Int
     receipt: TxReceipt
@@ -66,9 +66,9 @@ export const typeDefs = gql`
     blockHash: String
     blockNumber: Int
     contractAddress: String
-    cumulativeGasUsed: Int
+    cumulativeGasUsed: String
     from: String
-    gasUsed: Int
+    gasUsed: String
     logs: [Log]
     logsBloom: String
     status: Boolean
