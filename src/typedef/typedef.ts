@@ -1,7 +1,7 @@
 import { gql } from 'apollo-server-core'
 
 export const typeDefs = gql`
-    type Block {
+  type Block {
     id: ID
     hash: String
     gasUsed: String
