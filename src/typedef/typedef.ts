@@ -93,8 +93,7 @@ export const typeDefs = gql`
  type Address {
    address: ID!
    etpBalance: String
-   mstTransfers(limit: Int, offset: Int): [MSTTransfer]
-   transactions(limit: Int, offset: Int): [Tx]
+   transactions(limit: Int, offset: Int, sort: String): [Tx]
  }
 
   input BlockQuery {
