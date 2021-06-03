@@ -12,7 +12,7 @@ export const ContractResolver = async (parent: { address?: string } = {}, { addr
 
   const createTx = await TransactionModel.findOne(
     { creates: address, 'receipt.status': true },
-    { hash: 1 },
+    {},
     { lean: 1, collation: { locale: "en", strength: 2} },
   )
 
