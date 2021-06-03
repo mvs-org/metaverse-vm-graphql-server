@@ -90,6 +90,13 @@ export const typeDefs = gql`
     high_SATS: Float
  }
 
+ type Address {
+   address: ID!
+   etpBalance: String
+   mstTransfers: [MSTTransfer]
+   transactions: [Tx]
+ }
+
   input BlockQuery {
     hash: String
     number_gte: Int
@@ -119,6 +126,7 @@ export const typeDefs = gql`
     blocks(query: BlockQuery, limit: Int, offset: Int, sort: String): [Block]
     tx(id: ID!): Tx
     txs(query: TxQuery, limit: Int, offset: Int, sort: String): [Tx]
+    address(address: String): Address
     msts: [MSTInfo]
     mstTransfers(query: MSTQuery, limit: Int, offset: Int, sort: String): [MSTTransfer]
     price: Price

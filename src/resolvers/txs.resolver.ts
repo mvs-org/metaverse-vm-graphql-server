@@ -1,15 +1,16 @@
 import { TransactionModel } from '../models/transaction.model'
 
-export const TxsResolver = (parent: any, { query, limit, offset, sort, }: { query: any, limit: number, offset: number, sort: 'desc'|'asc' }) => {
+export const TxsResolver = (parent: {address?: string, hash?: string}, { query, limit, offset, sort, }: { query: any, limit: number, offset: number, sort: 'desc'|'asc' }) => {
+  const address = parent.address || query.address
   const q = query ? {
     ...(parent && parent.hash && { blockHash: parent.hash }),
-    ...(query.address && {
+    ...(address && {
       $or: [
         {
-          from: query.address,
+          from: address,
         },
         {
-          to: query.address,
+          to: address,
         }
       ]
     }),

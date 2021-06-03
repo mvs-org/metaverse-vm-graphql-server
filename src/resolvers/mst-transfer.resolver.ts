@@ -10,19 +10,21 @@ export const MSTInfoResolver = (parent: any = {}) => {
   return MST_CONTRACTS_MAP[parent.contractId]
 }
 
-export const MSTTransfersResolver = (_parent: any, { query = {}, limit, offset, sort, }: { query: any, limit: number, offset: number, sort: 'desc' | 'asc' }) => {
+export const MSTTransfersResolver = (parent: {address?: string} = {}, { query = {}, limit, offset, sort, }: { query: any, limit: number, offset: number, sort: 'desc' | 'asc' }) => {
+  const address = query.address || parent.address
+  console.log('address',{address})
   const q = {
     // Only known contract addresses
     "address": { $in: MST_CONTRACTS.map(contract => contract.address) },
     // Event Transfer(address from, address to, uint256 value)
     "topics.0": '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef',
-    ...(query.address && {
+    ...(address && {
       $or: [
         {
-          "topics.1": toLogTopic(query.address.toLowerCase()),
+          "topics.1": toLogTopic(address.toLowerCase()),
         },
         {
-          "topics.2": toLogTopic(query.address.toLowerCase()),
+          "topics.2": toLogTopic(address.toLowerCase()),
         },
       ]
     }),
