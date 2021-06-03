@@ -80,6 +80,8 @@ export const typeDefs = gql`
  type Price {
     current_USD: Float
     current_SATS: Float
+    change1h_USD: Float
+    change1h_SATS: Float
     change7d_USD: Float
     change7d_SATS: Float
     change24h_USD: Float
