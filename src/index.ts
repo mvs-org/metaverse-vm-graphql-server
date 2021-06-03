@@ -9,6 +9,7 @@ import { typeDefs } from './typedef/typedef'
 import { PriceResolver, } from './resolvers/price.resolver'
 import { SearchResolver } from './resolvers/search.resolver'
 import { MSTInfoResolver, MSTsInfoResolver, MSTTransfersResolver } from './resolvers/mst-transfer.resolver'
+import { ApolloLogPlugin } from 'apollo-log'
 
 // load environment
 config()
@@ -17,6 +18,12 @@ const GQL_ENDPOINT = process.env.GQL_ENDPOINT || 'http://127.0.0.1:4000/'
 const MONGO_URL = process.env.MONGO_URL || 'mongodb://127.0.0.1:27017/mvm-mainnet'
 const BIND_PORT = process.env.BIND_PORT ? parseInt(process.env.BIND_PORT, 10) : 4000
 const BIND_ADDRESS = process.env.BIND_ADDRESS || '127.0.0.1'
+
+const LOGGING_ENABLED = process.env.LOGGING_ENABLED === 'true'
+
+const plugins = [
+  ...(LOGGING_ENABLED ? [ApolloLogPlugin({prefix: 'mvs-vm-ql'})] : [])
+]
 
 const resolvers = {
   SearchResult: {
@@ -47,7 +54,7 @@ const resolvers = {
   }
 }
 
-const server = new ApolloServer({ typeDefs, resolvers, playground: { tabs: [{ endpoint: GQL_ENDPOINT }] } })
+const server = new ApolloServer({ typeDefs, resolvers, plugins, playground: { tabs: [{ endpoint: GQL_ENDPOINT }] } })
 
 server.listen(BIND_PORT, BIND_ADDRESS).then(async ({ url }) => {
 
