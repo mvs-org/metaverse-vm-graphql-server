@@ -12,6 +12,7 @@ import { ApolloLogPlugin } from 'apollo-log'
 import { BIND_ADDRESS, BIND_PORT, GQL_ENDPOINT, LOGGING_ENABLED, MONGO_URL } from './config/config'
 import { AddressResolver } from './resolvers/address.resolver'
 import { ETPBalanceResolver } from './resolvers/balance.resolver'
+import { ContractResolver } from './resolvers/contract.resolver'
 
 
 
@@ -34,6 +35,7 @@ const resolvers = {
     block: BlockResolver,
     blockByNumber: BlockByNumberResolver,
     blocks: BlocksResolver,
+    contract: ContractResolver,
     tx: TxResolver,
     txs: TxsResolver,
     msts: MSTsInfoResolver,
@@ -46,6 +48,7 @@ const resolvers = {
     etpBalance: ETPBalanceResolver,
     mstTransfers: MSTTransfersResolver,
     transactions: TxsResolver,
+    contract: ContractResolver,
   },
   Block: {
     transactions: TxsResolver

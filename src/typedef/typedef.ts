@@ -94,11 +94,21 @@ export const typeDefs = gql`
  }
 
  type Address {
-   address: ID!
-   etpBalance: String
-   mstTransfers(limit: Int, offset: Int, sort: String): [MSTTransfer]
-   transactions(limit: Int, offset: Int, sort: String): [Tx]
- }
+    address: ID!
+    etpBalance: String
+    contract: Contract
+    mstTransfers(limit: Int, offset: Int, sort: String): [MSTTransfer]
+    transactions(limit: Int, offset: Int, sort: String): [Tx]
+  }
+
+  type Contract {
+    address: ID!
+    creationTransaction: Tx
+    abi: String
+    sourceCode: String
+    bytecode: String
+    logoURI: String
+  }
 
   input BlockQuery {
     hash: String
@@ -132,6 +142,7 @@ export const typeDefs = gql`
     address(address: String): Address
     msts: [MSTInfo]
     mstTransfers(query: MSTQuery, limit: Int, offset: Int, sort: String): [MSTTransfer]
+    contract(address: ID!): Contract
     price: Price
     search(query: String!): [SearchResult]
   }
