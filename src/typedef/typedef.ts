@@ -60,6 +60,7 @@ export const typeDefs = gql`
     decimals: Int
     symbol: String
     logoURI: String
+    name: String
   }
 
   type TxReceipt {
