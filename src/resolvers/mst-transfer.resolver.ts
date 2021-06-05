@@ -34,23 +34,42 @@ export const MSTTransfersResolver = (parent: { address?: string } = {}, { query 
       }
     }),
   }
-  return LogModel.find(q, {}, {
-    limit: limit || 5,
-    skip: offset || 0,
-    sort: { blockNumber: sort == 'desc' ? -1 : 1 },
-    lean: 1,
-    collation: {
-      locale: "en",
-      strength: 2
+  return LogModel.aggregate([
+    {
+      $match: q,
+    },
+    { $skip: offset || 0 },
+    { $limit: limit || 5 },
+    {
+      $lookup: {
+        from: "tx",
+        localField: "transactionHash",
+        foreignField: "hash",
+        as: "transaction"
+      }
+    },
+    {
+      $project: {
+        _id: 0,
+        logIndex: 1,
+        address: 1,
+        topics: 1,
+        data: 1,
+        blockHash: 1,
+        blockNumber: 1,
+        transactionHash: 1,
+        transactionIndex: 1,
+        confirmedAt: { $arrayElemAt: ["$transaction.confirmedAt", 0] },
+      }
     }
+  ]).collation({
+    locale: "en",
+    strength: 2
   })
     .then((logs: any) => logs.map((log: any) => ({
-      transactionHash: log.transactionHash,
+      ...log,
       from: fromLogTopic(log.topics[1]),
       to: fromLogTopic(log.topics[2]),
       value: BigInt(log.data).toString(),
-      contractId: log.address,
-      blockHash: log.blockHash,
-      blockNumber: log.blockNumber,
     })))
 }

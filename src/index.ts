@@ -58,7 +58,7 @@ const resolvers = {
   }
 }
 
-const server = new ApolloServer({ typeDefs, resolvers, plugins, playground: { tabs: [{ endpoint: GQL_ENDPOINT }] } })
+const server = new ApolloServer({ typeDefs, resolvers, plugins, playground: { endpoint: GQL_ENDPOINT, tabs: [{ endpoint: GQL_ENDPOINT }], settings: {} },  })
 
 server.listen(BIND_PORT, BIND_ADDRESS).then(async ({ url }) => {
 

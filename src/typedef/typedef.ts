@@ -52,6 +52,7 @@ export const typeDefs = gql`
     contractId: String
     blockHash: String
     blockNumber: Int
+    confirmedAt: Int
     tokenInfo: MSTInfo
   }
 
