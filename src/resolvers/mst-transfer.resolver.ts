@@ -66,10 +66,21 @@ export const MSTTransfersResolver = (parent: { address?: string } = {}, { query 
     locale: "en",
     strength: 2
   })
+    // return LogModel.find(q, {}, {
+    //   limit: limit || 5,
+    //   skip: offset || 0,
+    //   sort: { blockNumber: sort == 'desc' ? -1 : 1 },
+    //   lean: 1,
+    //   collation: {
+    //     locale: "en",
+    //     strength: 2
+    //   }
+    // })
     .then((logs: any) => logs.map((log: any) => ({
       ...log,
       from: fromLogTopic(log.topics[1]),
       to: fromLogTopic(log.topics[2]),
       value: BigInt(log.data).toString(),
+      contractId: log.address,
     })))
 }
