@@ -1,4 +1,4 @@
-import { CONTRACTS_MAP } from '../models/contracts.model'
+import { ContractModel } from '../models/contracts.model'
 import { TransactionModel } from '../models/transaction.model'
 
 export const ContractResolver = async (parent: { address?: string } = {}, { address }: { address?: string } = {}) => {
@@ -10,21 +10,30 @@ export const ContractResolver = async (parent: { address?: string } = {}, { addr
     }
   }
 
-  const createTx = await TransactionModel.findOne(
+  const creationTransaction = await TransactionModel.findOne(
     { creates: address, 'receipt.status': true },
     {},
-    { lean: 1, collation: { locale: "en", strength: 2} },
+    { lean: 1, collation: { locale: "en", strength: 2 } },
   )
 
-  if(createTx == null ){
+  if (creationTransaction == null) {
     return null
   }
 
-  const contractInfo = CONTRACTS_MAP[address] || {}
+  // load contract metadata from contract collection
+  const contractInfo = await ContractModel.findOne(
+    {
+      address,
+    },
+    {},
+    {
+      collation: { locale: "en", strength: 2 },
+      lean: 1,
+    })
 
-  return{
-    ...contractInfo,
+  return {
+    ...(contractInfo || {}),
     address,
-    creationTransaction: createTx,
+    creationTransaction,
   }
 }

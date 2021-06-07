@@ -1,14 +1,26 @@
-import { keyBy } from 'lodash'
+import { Schema, model } from 'mongoose'
 
-export const CONTRACTS = [
-    require('../../contracts/gene-mst.json'),
-    require('../../contracts/wetp-mst.json'),
-    require('../../contracts/dna-mst.json'),
-    require('../../contracts/usdt-mst.json'),
-    require('../../contracts/sks-mst.json'),
-].map(contract=>({
-    ...contract,
-    abi: JSON.stringify(contract.abi)
-}))
+export const ContractSchema = new Schema({
+    address: {
+        type: String,
+        unique: true,
+    },
+    abi: Object,
+    contractName: String,
+    logoURI: String,
+    bytecode: String,
+    source: String,
+    creationTransactionHash: String,
+    compiler: {
+        name: String,
+        version: String
+    }
+}, {
+    collection: 'contract',
+    collation: {
+        locale: 'en',
+        strength: 2,
+    },
+})
 
-export const CONTRACTS_MAP = keyBy(CONTRACTS, 'address')
+export const ContractModel = model('Contract', ContractSchema)
