@@ -33,7 +33,7 @@ export const ContractResolver = async (parent: { address?: string } = {}, { addr
 
   return {
     ...(contractInfo || {}),
-    ...(contractInfo?.abi && {
+    ...(contractInfo && contractInfo.abi && {
       abi: JSON.stringify(contractInfo.abi),
     }),
     address,
