@@ -42,6 +42,13 @@ export const typeDefs = gql`
     removed: Boolean
     topics: [String]
     transactionIndex: Int
+    decoded: DecodedLog
+  }
+
+  type DecodedLog {
+    name: String
+    values: [Object]
+    signature: String
   }
 
   type MSTTransfer {
@@ -132,6 +139,8 @@ export const typeDefs = gql`
     blockNumber_lte: Int
     address: String
   }
+
+  scalar Object
 
   union SearchResult = Tx|Block
 
