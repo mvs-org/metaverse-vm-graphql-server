@@ -80,3 +80,37 @@ export const DecodedLogResolver = async (parent: { address: string, topics: stri
   return null
 }
 
+export const DecodedTxResolver = async (parent: { to: string, input: string }) => {
+  const address = parent.to
+
+  let abi: any[] | undefined = abiCache.get(address)
+
+  if(abi == null ){
+    const contractData = await ContractModel.findOne({ address })
+    if (contractData && contractData.abi) {
+      abi = contractData.abi
+      abiCache.set(address, abi)
+    }
+  }
+
+  if (abi) {
+    const contractInterface = new utils.Interface(abi)
+    const decoded = contractInterface.parseTransaction({
+      data: parent.input
+    })
+    if (decoded) {
+      return {
+        name: decoded.name,
+        signature: decoded.signature,
+        arguments: decoded.functionFragment.inputs.map((input, index) => ({
+          name: input.name,
+          type: input.type,
+          indexed: input.indexed,
+          value: decoded.args[index]
+        }))
+      }
+    }
+    return
+  }
+  return null
+}

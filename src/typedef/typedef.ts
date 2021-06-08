@@ -29,6 +29,13 @@ export const typeDefs = gql`
     raw: String
     to: String
     value: String
+    decoded: DecodedTx
+  }
+
+  type DecodedTx {
+    name: String
+    arguments: [Object]
+    signature: String
   }
 
   type Log {

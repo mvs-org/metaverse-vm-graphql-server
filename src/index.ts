@@ -12,7 +12,7 @@ import { ApolloLogPlugin } from 'apollo-log'
 import { BIND_ADDRESS, BIND_PORT, GQL_ENDPOINT, LOGGING_ENABLED, MONGO_URL } from './config/config'
 import { AddressResolver } from './resolvers/address.resolver'
 import { ETPBalanceResolver } from './resolvers/balance.resolver'
-import { ContractResolver, DecodedLogResolver } from './resolvers/contract.resolver'
+import { ContractResolver, DecodedLogResolver, DecodedTxResolver } from './resolvers/contract.resolver'
 import { GraphQLScalarType, Kind } from 'graphql'
 
 
@@ -74,6 +74,9 @@ const resolvers = {
   },
   Log: {
     decoded: DecodedLogResolver,
+  },
+  Tx: {
+    decoded: DecodedTxResolver,
   },
   MSTTransfer: {
     tokenInfo: MSTInfoResolver,
