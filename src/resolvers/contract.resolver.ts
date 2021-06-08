@@ -49,6 +49,9 @@ export const DecodedLogResolver = async (parent: { address: string, topics: stri
   const address = parent.address
 
 
+  console.log({address})
+
+
   let abi: any[] | undefined = abiCache.get(address)
 
   if(abi == null ){
@@ -80,8 +83,8 @@ export const DecodedLogResolver = async (parent: { address: string, topics: stri
   return null
 }
 
-export const DecodedTxResolver = async (parent: { to: string, input: string }) => {
-  const address = parent.to
+export const DecodedTxResolver = async (parent: { to: string, creates: string, input: string }) => {
+  const address = parent.to || parent.creates
 
   let abi: any[] | undefined = abiCache.get(address)
 
