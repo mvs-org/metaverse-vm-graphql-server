@@ -48,10 +48,6 @@ export const ContractResolver = async (parent: { address?: string } = {}, { addr
 export const DecodedLogResolver = async (parent: { address: string, topics: string[], data: string }) => {
   const address = parent.address
 
-
-  console.log({address})
-
-
   let abi: any[] | undefined = abiCache.get(address)
 
   if(abi == null ){
