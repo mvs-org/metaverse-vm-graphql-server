@@ -15,7 +15,20 @@ export const AddressMSTResolver = async (parent: { address?: string } = {}, { ad
         return null
     }
     const result = await LogModel.aggregate([
-        { $match: { address: { $in: MST_CONTRACT_ADDRESSES }, topics: toLogTopic(address) } },
+        {
+            $match: {
+                address: { $in: MST_CONTRACT_ADDRESSES },
+                "topics.0": '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef',
+                $or: [
+                    {
+                        "topics.1": toLogTopic(address.toLowerCase()),
+                    },
+                    {
+                        "topics.2": toLogTopic(address.toLowerCase()),
+                    },
+                ]
+            }
+        },
         { $group: { _id: null, addresses: { $addToSet: "$address" } } },
     ]).collation({
         locale: "en",
