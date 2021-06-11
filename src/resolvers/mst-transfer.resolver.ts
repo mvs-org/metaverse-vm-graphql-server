@@ -1,6 +1,6 @@
 import { fromLogTopic, toLogTopic } from '../models/address.model'
 import { LogModel } from '../models/log.model'
-import { MST_CONTRACTS, MST_CONTRACTS_MAP } from '../models/mst.model'
+import { MST_CONTRACTS, MST_CONTRACTS_MAP, MST_CONTRACT_ADDRESSES } from '../models/mst.model'
 
 export const MSTsInfoResolver = () => {
   return MST_CONTRACTS
@@ -14,7 +14,7 @@ export const MSTTransfersResolver = (parent: { address?: string } = {}, { query 
   const address = query.address || parent.address
   const q = {
     // Only known contract addresses
-    "address": { $in: MST_CONTRACTS },
+    "address": { $in: MST_CONTRACT_ADDRESSES },
     // Event Transfer(address from, address to, uint256 value)
     "topics.0": '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef',
     ...(address && {
