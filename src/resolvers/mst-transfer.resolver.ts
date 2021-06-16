@@ -40,6 +40,7 @@ export const MSTTransfersResolver = (parent: { address?: string } = {}, { query 
     },
     { $skip: offset || 0 },
     { $limit: limit || 5 },
+    { $sort: { blockNumber: -1 } },
     {
       $lookup: {
         from: "tx",
