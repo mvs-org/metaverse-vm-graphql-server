@@ -11,6 +11,7 @@ export const typeDefs = gql`
     size: Int
     timestamp: Int
     transactions: [Tx!]
+    transactionCount: Int
   }
 
   type Tx {
