@@ -9,7 +9,7 @@ export const BlocksResolver = (_parent: any, { query, limit, offset, sort }: { q
       }
     })
   } : {}
-  return BlockModel.find(q, {}, { limit: limit || 5, skip: offset || 0, sort: { number: sort == 'desc' ? -1 : 1 } })
+  return BlockModel.find(q, {}, { limit: limit || 5, skip: offset || 0, sort: { number: sort == 'desc' ? -1 : 1 }, lean: true })
     .then((result: any[])=>result.map(block=>({
       ...block,
       transactionCount: block.transactions.length,
