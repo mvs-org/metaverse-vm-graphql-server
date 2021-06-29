@@ -159,7 +159,8 @@ export const typeDefs = gql`
     blocks(query: BlockQuery, limit: Int, offset: Int, sort: String): [Block]
     tx(id: ID!): Tx
     txs(query: TxQuery, limit: Int, offset: Int, sort: String): [Tx]
-    address(address: String): Address
+    address(address: String!): Address
+    logs(address: String, topic: String): [Log]
     msts: [MSTInfo]
     mstTransfers(query: MSTQuery, limit: Int, offset: Int, sort: String): [MSTTransfer]
     contract(address: ID!): Contract

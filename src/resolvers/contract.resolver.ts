@@ -2,8 +2,9 @@ import { ContractModel } from '../models/contracts.model'
 import { TransactionModel } from '../models/transaction.model'
 import { utils } from 'ethers'
 import Cache from 'node-cache'
+import { LogModel } from '../models/log.model'
 
-const abiCache = new Cache( { stdTTL: 3600, checkperiod: 600 } );
+const abiCache = new Cache({ stdTTL: 3600, checkperiod: 600 })
 
 export const ContractResolver = async (parent: { address?: string } = {}, { address }: { address?: string } = {}) => {
   if (address === undefined) {
@@ -45,12 +46,31 @@ export const ContractResolver = async (parent: { address?: string } = {}, { addr
   }
 }
 
+export const LogsResolver = async (_parent: Object, { address, topic }: { address: string, topic: string }) => {
+
+  const logs = await LogModel.find(
+    {
+      address,
+      ...(topic && { "topics.0": topic }),
+    },
+    {},
+    {
+      limit: 25,
+      sort: { blockNumber: -1 },
+      lean: 1,
+      collation: { locale: "en", strength: 2 },
+    })
+
+  return logs
+
+}
+
 export const DecodedLogResolver = async (parent: { address: string, topics: string[], data: string }) => {
   const address = parent.address
 
   let abi: any[] | undefined = abiCache.get(address)
 
-  if(abi == null ){
+  if (abi == null) {
     const contractData = await ContractModel.findOne({ address })
     if (contractData && contractData.abi) {
       abi = contractData.abi
@@ -82,13 +102,13 @@ export const DecodedLogResolver = async (parent: { address: string, topics: stri
 export const DecodedTxResolver = async (parent: { to: string, input: string }) => {
   const address = parent.to
 
-  if(address==null){
+  if (address == null) {
     return null
   }
 
   let abi: any[] | undefined = abiCache.get(address)
 
-  if(abi == null ){
+  if (abi == null) {
     const contractData = await ContractModel.findOne({ address })
     if (contractData && contractData.abi) {
       abi = contractData.abi
