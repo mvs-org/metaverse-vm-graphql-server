@@ -46,16 +46,42 @@ export const ContractResolver = async (parent: { address?: string } = {}, { addr
   }
 }
 
-export const LogsResolver = async (_parent: Object, { address, topic }: { address: string, topic: string }) => {
+export const LogsResolver = async (
+  parent: { address: string },
+  { address, topic, query, limit, skip }: { skip?: number, limit?: number, address?: string, topic?: string, query?: { blockNumber_gte?: number, blockNumber_lte?: number } }
+) => {
+
+  if(query===undefined){
+    query = {}
+  }
+
+  if (parent.address) {
+    address = parent.address
+  }
+
+  if (!skip || skip < 0) {
+    skip = 0
+  }
+
+  if (!limit || limit < 0) {
+    limit = 25
+  }
 
   const logs = await LogModel.find(
     {
       address,
       ...(topic && { "topics.0": topic }),
+      ...((query.blockNumber_gte || query.blockNumber_lte) && {
+        blockNumber: {
+          ...(query.blockNumber_gte && { $gte: query.blockNumber_gte }),
+          ...(query.blockNumber_lte && { $lte: query.blockNumber_lte }),
+        }
+      })
     },
     {},
     {
-      limit: 25,
+      limit,
+      skip,
       sort: { blockNumber: -1 },
       lean: 1,
       collation: { locale: "en", strength: 2 },

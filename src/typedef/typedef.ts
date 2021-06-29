@@ -116,6 +116,7 @@ export const typeDefs = gql`
     msts: [MSTInfo]
     mstTransfers(limit: Int, offset: Int, sort: String): [MSTTransfer]
     transactions(limit: Int, offset: Int, sort: String): [Tx]
+    logs(topic: String, query: LogQuery): [Log]
   }
 
   type Contract {
@@ -149,6 +150,11 @@ export const typeDefs = gql`
     address: String
   }
 
+  input LogQuery {
+    blockNumber_gte: Int
+    blockNumber_lte: Int
+  }
+
   scalar Object
 
   union SearchResult = Tx|Block
@@ -160,7 +166,7 @@ export const typeDefs = gql`
     tx(id: ID!): Tx
     txs(query: TxQuery, limit: Int, offset: Int, sort: String): [Tx]
     address(address: String!): Address
-    logs(address: String, topic: String): [Log]
+    logs(query: LogQuery, address: String, topic: String): [Log]
     msts: [MSTInfo]
     mstTransfers(query: MSTQuery, limit: Int, offset: Int, sort: String): [MSTTransfer]
     contract(address: ID!): Contract

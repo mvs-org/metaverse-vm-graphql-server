@@ -70,6 +70,7 @@ const resolvers = {
     transactions: TxsResolver,
     contract: ContractResolver,
     msts: AddressMSTResolver,
+    logs: LogsResolver,
   },
   Block: {
     transactions: TxsResolver
