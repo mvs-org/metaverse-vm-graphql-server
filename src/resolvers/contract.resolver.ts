@@ -47,20 +47,20 @@ export const ContractResolver = async (parent: { address?: string } = {}, { addr
 }
 
 export const LogsResolver = async (
-  parent: { address: string },
-  { address, topic, query, limit, skip }: { skip?: number, limit?: number, address?: string, topic?: string, query?: { blockNumber_gte?: number, blockNumber_lte?: number } }
+  parent: { address?: string },
+  { address, topic, query, limit, offset }: { offset?: number, limit?: number, address?: string, topic?: string, query?: { blockNumber_gte?: number, blockNumber_lte?: number } }
 ) => {
 
   if(query===undefined){
     query = {}
   }
 
-  if (parent.address) {
+  if (parent && parent.address) {
     address = parent.address
   }
 
-  if (!skip || skip < 0) {
-    skip = 0
+  if (!offset || offset < 0) {
+    offset = 0
   }
 
   if (!limit || limit < 0) {
@@ -81,7 +81,7 @@ export const LogsResolver = async (
     {},
     {
       limit,
-      skip,
+      skip: offset,
       sort: { blockNumber: -1 },
       lean: 1,
       collation: { locale: "en", strength: 2 },

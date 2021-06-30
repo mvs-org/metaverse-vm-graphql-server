@@ -116,7 +116,7 @@ export const typeDefs = gql`
     msts: [MSTInfo]
     mstTransfers(limit: Int, offset: Int, sort: String): [MSTTransfer]
     transactions(limit: Int, offset: Int, sort: String): [Tx]
-    logs(topic: String, query: LogQuery): [Log]
+    logs(topic: String, query: LogQuery, limit: Int, offset: Int): [Log]
   }
 
   type Contract {
@@ -166,7 +166,7 @@ export const typeDefs = gql`
     tx(id: ID!): Tx
     txs(query: TxQuery, limit: Int, offset: Int, sort: String): [Tx]
     address(address: String!): Address
-    logs(query: LogQuery, address: String, topic: String): [Log]
+    logs(query: LogQuery, address: String, topic: String, limit: Int, offset: Int): [Log]
     msts: [MSTInfo]
     mstTransfers(query: MSTQuery, limit: Int, offset: Int, sort: String): [MSTTransfer]
     contract(address: ID!): Contract
