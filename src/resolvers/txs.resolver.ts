@@ -18,7 +18,7 @@ export const TxsResolver = (parent: { address?: string, hash?: string } = {}, { 
       ]
     }),
     ...(query.from && { from: query.from }),
-    ...(query.to && { from: query.to }),
+    ...(query.to && { to: query.to }),
     ...((query.blockNumber_gte || query.blockNumber_lte) && {
       blockNumber: {
         ...(query.blockNumber_gte && { $gte: query.blockNumber_gte }),
